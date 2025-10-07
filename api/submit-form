@@ -1,0 +1,8 @@
+<?php
+// This file acts as a redirect to submit-form.php
+// Some servers might need this for the clean URL to work
+
+// Redirect to the actual PHP file
+header("Location: /api/submit-form.php");
+exit();
+?>

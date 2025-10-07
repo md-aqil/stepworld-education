@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Direct PHP Endpoint</title>
+</head>
+<body>
+    <h1>Test Direct PHP Endpoint</h1>
+    <button id="testButton">Test Direct PHP Endpoint</button>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('testButton').addEventListener('click', async () => {
+            const testButton = document.getElementById('testButton');
+            const resultDiv = document.getElementById('result');
+            
+            // Disable button during test
+            testButton.disabled = true;
+            testButton.textContent = 'Testing...';
+            resultDiv.innerHTML = '';
+            
+            try {
+                const testData = {
+                    name: 'Test User',
+                    email: 'test@example.com',
+                    mobile: '1234567890',
+                    state: 'Test State',
+                    city: 'Test City',
+                    course: 'Test Course',
+                    college: 'Test College'
+                };
+                
+                const response = await fetch('/api/submit-form.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<p style="color: green;">Success! Response: ${JSON.stringify(result)}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red;">Error! Status: ${response.status}, Response: ${JSON.stringify(result)}</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Network Error: ${error.message}</p>`;
+            } finally {
+                // Re-enable button
+                testButton.disabled = false;
+                testButton.textContent = 'Test Direct PHP Endpoint';
+            }
+        });
+    </script>
+</body>
+</html>

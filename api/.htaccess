@@ -1,0 +1,17 @@
+# Apache configuration for URL rewriting
+# This allows accessing submit-form.php as submit-form
+
+Options +FollowSymLinks
+RewriteEngine On
+
+# Handle the rewrite from /api/submit-form to /api/submit-form.php
+RewriteCond %{REQUEST_URI} ^/api/submit-form$
+RewriteCond %{REQUEST_METHOD} POST [OR]
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^api/submit-form$ api/submit-form.php [L,QSA]
+
+# Also handle the case without the leading slash
+RewriteCond %{REQUEST_URI} ^api/submit-form$
+RewriteCond %{REQUEST_METHOD} POST [OR]
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^api/submit-form$ api/submit-form.php [L,QSA]
